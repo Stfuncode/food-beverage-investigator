@@ -3,6 +3,7 @@ from django.contrib import messages
 import random
 from data.forms import addRestaurant, addReview
 from data.models import Restaurant, RestaurantReview
+from account.models import Account
 
 # Create your views here.
 def add_restaurant(request):
@@ -35,10 +36,12 @@ def list_restaurant(request):
 
 def add_review(request):
     if request.method == "POST":
-        review = addReview(request.POST)
+        review = addReview(request.user, request.POST)
         if review.is_valid():
-           review.save()
-           messages.success('Review Added Successfully')
+            form = review.save(commit=False)
+            form.user = Account.objects.get(account_id=request.user)
+            form.save()
+            messages.success('Review Added Successfully')
         else:
             messages.error('There is something wrong with the submission')
     
@@ -48,12 +51,24 @@ def add_review(request):
 
 def list_review(request):
     queryset = RestaurantReview.objects.all()
-
     context = {
         'form' : queryset
     }
     return render(request, "list_review.html", context)
 
-def edit_restaurant(request):
+def edit_restaurant(request, event_id):
+    event = Restaurant.objects.get(pk=event_id)
+    if request.method == "POST":
+        form = addRestaurant(request.POST, instance=event)
+        if form.is_valid():
+            form.save
+            messages.success(request, "Successfully update Restaurant details!")
+            return redirect('list_restaurant', event_id)
+        else:
+            form = addRestaurant(instance=event)
+        
+    context = {
+        'form': form
+    }   
 
-    return redirect(list_restaurant)
+    return render(request, 'list_restaurant.html', context)

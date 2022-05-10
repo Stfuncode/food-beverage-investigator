@@ -41,8 +41,7 @@
               <td class="align-middle text-center text-m"><i class="fas fa-angry" style="color: red;"></i></td>
               {% endif %}
               <td class="align-middle text-center text-m">
-                <button onclick="editEvent('{{form.id}}', '{{data_json}}')" data-toggle="modal"
-                data-target="#editFormModal" class="badge badge-sm outline-blue">Edit</button>
+                <a href="" class="badge badge-sm outline-blue">Edit</button>
                 <a onClick="setID('{{ form.id }}')" data-toggle="modal" data-target="#deleteModal" class="badge badge-sm outline-danger">Delete</a></td>
             </tr>
             {% endfor %}

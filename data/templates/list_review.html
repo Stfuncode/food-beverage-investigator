@@ -3,7 +3,7 @@
 <!-- Page Heading -->
 
 <title></title>
-<h1 class="h3 mb-0 text-gray-800">Poultry Mortality Records</h1><br>
+<h1 class="h3 mb-0 text-gray-800">Review List</h1><br>
 
 
 <!-- DataTales Example -->
@@ -16,6 +16,7 @@
           <tr>
             <th class="text-center text-uppercase text-secondary text-mb font-weight-bolder opacity-15"> Restaurant Name </th>
             <th class="text-center text-uppercase text-secondary text-mb font-weight-bolder opacity-15"> Rating </th>
+            <th class="text-center text-uppercase text-secondary text-mb font-weight-bolder opacity-15"> User </th>
             <th class="text-center text-uppercase text-secondary text-mb font-weight-bolder opacity-15"> Review </th>
           </tr>
         </thead>
@@ -24,7 +25,12 @@
                 <tr>
                   <td class="align-middle text-center text-m"><b>{{ form.restaurant.restaurant_name }}</b></td>
                   <td class="align-middle text-center text-m"><b>{{ form.rating }}</b></td>
-                  <td class="align-middle text-m"><p>{{ form.review }}</p></td>
+                  {% if form.user_id == None %}
+                  <td class="align-middle text-center text-m"><b>Anonymous</b></td>
+                  {% else %}
+                  <td class="align-middle text-center text-m"><b>{{ form.user_id }}</b></td>
+                  {% endif %}
+                  <td class="align-middle text-m m-0"><p>{{ form.review }}</p></td>
                 </tr>
           {% endfor %}
         </tbody>

@@ -64,9 +64,13 @@ def register(request):
 def homepage(request):
     user = Account.objects.filter(is_superuser=False).count()
     rest = Restaurant.objects.all().count()
+    rating = RestaurantReview.objects.exclude(rating__isnull=True).count()
+    review = RestaurantReview.objects.exclude(review__isnull=True).count()
     context = {
         "user_count" : user,
-        "rest_count" : rest
+        "rest_count" : rest,
+        "rating_count" : rating,
+        "review_count" : review,
     }
     return render(request, "home.html", context)
 

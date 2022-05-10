@@ -2,6 +2,8 @@ from tkinter import CASCADE
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
+
+from account.models import Account
 # Create your models here.
 
 PRICE = (
@@ -50,6 +52,7 @@ class RestaurantReview(models.Model):
     restaurant = models.ForeignKey(Restaurant, related_name="restaurant", on_delete=models.SET_NULL, null=True)
     review = models.TextField('Review', blank=True, null=True)
     rating = models.FloatField('Rating', default=0.0, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    user = models.ForeignKey(Account, related_name="account", on_delete=models.SET_NULL, null=True, default=uuid.uuid1)
 
     def __str__(self):
         return self.restaurant
